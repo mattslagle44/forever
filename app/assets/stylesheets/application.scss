@@ -15,3 +15,32 @@
  */
 
 @import "bulma";
+@import "font-awesome";
+
+.section {
+    background: aliceblue;
+}
+
+.panel {
+    background: white;
+}
+
+.panel-heading {
+    background: #3298dc;
+    color: white;
+}
+
+.navbar-brand .title {
+    color: white;
+}
+
+.image {
+    border-radius: 50%;
+    img {
+        border-radius: 50%;
+    }
+}
+
+.notifications:not(:last-child) {
+    margin-bottom: 0;
+}

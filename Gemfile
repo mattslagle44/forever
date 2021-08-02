@@ -31,6 +31,7 @@ gem 'bulma-rails', '~> 0.9.1'
 gem 'simple_form', '~> 5.1'
 gem 'gravatar_image_tag', '~> 1.2'
 gem 'devise', '~> 4.8'
+gem "font-awesome-rails"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
