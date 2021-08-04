@@ -21,50 +21,52 @@
           </figure>
         </div>
         <div class="media-content">
-          <div class="content">
-            <strong><%= post.user.name %></strong>
-            <p><%= post.post %></p>
-          </div>
-          <nav class="level">
-            <div class="level-left is-mobile">
-              <% if post.user == current_user %>
-                <%= link_to edit_post_path(post), class: "level-item" do %>
-                  <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-                <% end %>
-                <%= link_to post, method: :delete, data: { confirm: "Are you sure you want to delete this post?"} do %>
-                  <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-                <% end %>
-              <% end %>
+          <div id="post">
+            <div class="content">
+              <strong id="post-author"><%= post.user.name %></strong>
+              <p class="post-text"><%= post.post %></p>
             </div>
-          </nav>
-          <% if user_signed_in? %>
-            <% if post.comments %>
-              <div class="post-bottom">
-                <% post.comments.each do |comment| %>
-                  <div id="comment">
-                    <div class="user-name">
-                      <%= comment.user.name %>
-                    </div>
-                    <div class="comment_content">
-                      <%= comment.content %>
-                    </div>
-                    <% if comment.user == current_user %>
-                      <%= link_to edit_post_comment_path(post, comment) do %>
-                        <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-                      <% end %>
-                      <%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "Delete comment?" } do %>
-                        <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-                      <% end %>
-                    <% end %>
-                  </div>
+            <nav id="post-buttons" class="level">
+              <div class="level-left is-mobile">
+                <% if post.user == current_user %>
+                  <%= link_to edit_post_path(post), class: "level-item" do %>
+                    <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                  <% end %>
+                  <%= link_to post, method: :delete, data: { confirm: "Are you sure you want to delete this post?"} do %>
+                    <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                  <% end %>
                 <% end %>
               </div>
-            <% end %>
-            <div class="comment-form">
-              <%= form_for [post, post.comments.new] do |f| %>
-                <%= f.text_field :content, placeholder: "Add a comment" %>
+            </nav>
+          </div>
+          <% if post.comments %>
+            <div class="post-bottom">
+              <% post.comments.each do |comment| %>
+                <div id="comment">
+                  <div class="user-name">
+                    <%= comment.user.name %>
+                  </div>
+                  <div class="comment_content">
+                    <%= comment.content %>
+                  </div>
+                  <% if comment.user == current_user %>
+                    <%= link_to edit_post_comment_path(post, comment) do %>
+                      <span class="icon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                    <% end %>
+                  <% end %>
+                  <% if comment.user == current_user || comment.post.user == current_user %>
+                    <%= link_to post_comment_path(post, comment), method: :delete, data: { confirm: "Delete comment?" } do %>
+                      <span class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+                    <% end %>
+                  <% end %>
+                </div>
               <% end %>
             </div>
+            <% if user_signed_in? %>
+              <%= form_for [post, post.comments.new] do |f| %>
+                <%= f.text_field :content, placeholder: "Leave a comment...", class: "comment-form" %>
+              <% end %>
+            <% end %>
           <% end %>
         </div>
       </article>

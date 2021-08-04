@@ -9,17 +9,17 @@ class CommentsController < ApplicationController
   # GET /comments/1 or /comments/1.json
   def show
     @comment = @post.comments.build(comment_params)
-    @comment.user_id = current_user.id
   end
 
   # GET /comments/new
   def new
     @comment = @post.comments.build(comment_params)
-    @comment.user_id = current_user.id
   end
 
   # GET /comments/1/edit
   def edit
+    @comment = Comment.find(params[:id])
+    @post = Post.find(params[:post_id])
   end
 
   # POST /comments or /comments.json
@@ -40,6 +40,8 @@ class CommentsController < ApplicationController
 
   # PATCH/PUT /comments/1 or /comments/1.json
   def update
+    @comment = Comment.find(params[:id])
+    @post = Post.find(params[:post_id])
     respond_to do |format|
       if @comment.update(comment_params)
         format.html { redirect_to root_path, notice: "Comment was successfully updated." }
