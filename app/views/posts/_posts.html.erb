@@ -1,4 +1,4 @@
-<div class="column is-half">
+<div class="column is-three-quarters">
   <% if user_signed_in? %>
     <article class="media box">
       <figure class="media-left">
@@ -36,6 +36,30 @@
                 <% end %>
               <% end %>
             </div>
+            <% if user_signed_in? %>
+              <% if post.comments %>
+                <div class="content">
+                  <%= post.comments.each do |comment| %>
+                    <div class="comment">
+                      <div class="user-name">
+                        <%= comment.user.name %>
+                      </div>
+                      <div class="comment-content">
+                        <%= comment.content %>
+                      </div>
+                      <% if comment.user == current_user %>
+                        <%= link_to post_comment_path(post, comment), method: :delete, data: {confirm: "Delete comment?"} %>
+                      <% end %>
+                    </div>
+                  <% end %>
+                </div>
+              <% end %>
+              <div class="comment-form">
+                <%= form_for [post, post.comments.new] do |f| %>
+                  <%= f.text_field :content, placeholder: "Add a comment" %>
+                <% end %>
+              </div>
+            <% end %>
           </nav>
         </div>
       </article>
