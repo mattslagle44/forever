@@ -8,11 +8,14 @@ class CommentsController < ApplicationController
 
   # GET /comments/1 or /comments/1.json
   def show
+    @comment = @post.comments.build(comment_params)
+    @comment.user_id = current_user.id
   end
 
   # GET /comments/new
   def new
-    @comment = Comment.new
+    @comment = @post.comments.build(comment_params)
+    @comment.user_id = current_user.id
   end
 
   # GET /comments/1/edit
@@ -50,6 +53,7 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
+    @comment = @post.comments.find(params[:id])
     @comment.destroy
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Comment was successfully destroyed." }
@@ -65,6 +69,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment, :post_id, :user_id).permit(:content)
+      params.require(:comment).permit(:content)
     end
 end
